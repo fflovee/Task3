@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jnshu.dao.LeaveWordsMapper">
+  <resultMap id="BaseResultMap" type="com.jnshu.pojo.LeaveWords">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="leavewords_id" jdbcType="BIGINT" property="leavewordsId" />
+    <result column="production_name" jdbcType="VARCHAR" property="productionName" />
+    <result column="leavewords" jdbcType="VARCHAR" property="leavewords" />
+    <result column="leavewords_stat" jdbcType="TINYINT" property="leavewordsStat" />
+    <result column="tourists_nickname" jdbcType="VARCHAR" property="touristsNickname" />
+    <result column="create_at" jdbcType="BIGINT" property="createAt" />
+    <result column="update_at" jdbcType="BIGINT" property="updateAt" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="leavewords_reply" jdbcType="VARCHAR" property="leavewordsReply" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, leavewords_id, production_name, leavewords, leavewords_stat, tourists_nickname, 
+    create_at, update_at, create_by, leavewords_reply
+  </sql>
+
+  <!--根据作品名称和留言状态查询-->
+  <select id="selectLeavewordsByNameAndStat" parameterType="com.jnshu.pojo.LeaveWords" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from leavewords_manage
+      <where>
+      <if test="productionName != null and productionName != ''">
+        and production_name like #{productionName}
+      </if>
+      <if test="leavewordsStat != null and leavewordsStat != ''">
+        and  leavewords_stat = #{leavewordsStat}
+      </if>
+      </where>
+    </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from leavewords_manage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!--主键删除-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from leavewords_manage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <!--批量删除-->
+  <delete id="deleteByIds" parameterType="java.util.List">
+    delete from leavewords_manage where id in 
+    <foreach collection="list" item="id"
+             open="(" close=")" index="index" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+
+  <insert id="insert" parameterType="com.jnshu.pojo.LeaveWords">
+    insert into leavewords_manage (id, leavewords_id, production_name, 
+      leavewords, leavewords_stat, tourists_nickname, 
+      create_at, update_at, create_by, 
+      leavewords_reply)
+    values (#{id,jdbcType=BIGINT}, #{leavewordsId,jdbcType=BIGINT}, #{productionName,jdbcType=VARCHAR}, 
+      #{leavewords,jdbcType=VARCHAR}, #{leavewordsStat,jdbcType=TINYINT}, #{touristsNickname,jdbcType=VARCHAR}, 
+      #{createAt,jdbcType=BIGINT}, #{updateAt,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, 
+      #{leavewordsReply,jdbcType=VARCHAR})
+  </insert>
+
+  <insert id="insertSelective" parameterType="com.jnshu.pojo.LeaveWords">
+    insert into leavewords_manage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="leavewordsId != null">
+        leavewords_id,
+      </if>
+      <if test="productionName != null">
+        production_name,
+      </if>
+      <if test="leavewords != null">
+        leavewords,
+      </if>
+      <if test="leavewordsStat != null">
+        leavewords_stat,
+      </if>
+      <if test="touristsNickname != null">
+        tourists_nickname,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="leavewordsReply != null">
+        leavewords_reply,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="leavewordsId != null">
+        #{leavewordsId,jdbcType=BIGINT},
+      </if>
+      <if test="productionName != null">
+        #{productionName,jdbcType=VARCHAR},
+      </if>
+      <if test="leavewords != null">
+        #{leavewords,jdbcType=VARCHAR},
+      </if>
+      <if test="leavewordsStat != null">
+        #{leavewordsStat,jdbcType=TINYINT},
+      </if>
+      <if test="touristsNickname != null">
+        #{touristsNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="leavewordsReply != null">
+        #{leavewordsReply,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.jnshu.pojo.LeaveWords">
+    update leavewords_manage
+    <set>
+      <if test="leavewordsId != null">
+        leavewords_id = #{leavewordsId,jdbcType=BIGINT},
+      </if>
+      <if test="productionName != null">
+        production_name = #{productionName,jdbcType=VARCHAR},
+      </if>
+      <if test="leavewords != null">
+        leavewords = #{leavewords,jdbcType=VARCHAR},
+      </if>
+      <if test="leavewordsStat != null">
+        leavewords_stat = #{leavewordsStat,jdbcType=TINYINT},
+      </if>
+      <if test="touristsNickname != null">
+        tourists_nickname = #{touristsNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="leavewordsReply != null">
+        leavewords_reply = #{leavewordsReply,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.jnshu.pojo.LeaveWords">
+    update leavewords_manage
+    set leavewords_id = #{leavewordsId,jdbcType=BIGINT},
+      production_name = #{productionName,jdbcType=VARCHAR},
+      leavewords = #{leavewords,jdbcType=VARCHAR},
+      leavewords_stat = #{leavewordsStat,jdbcType=TINYINT},
+      tourists_nickname = #{touristsNickname,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=BIGINT},
+      update_at = #{updateAt,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      leavewords_reply = #{leavewordsReply,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

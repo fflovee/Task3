@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jnshu.dao.BannerManageMapper">
+  <resultMap id="BaseResultMap" type="com.jnshu.pojo.BannerManage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="production_url" jdbcType="VARCHAR" property="productionUrl" />
+    <result column="illustrating_picture" jdbcType="VARCHAR" property="illustratingPicture" />
+    <result column="banner_state" jdbcType="TINYINT" property="bannerState" />
+    <result column="create_at" jdbcType="BIGINT" property="createAt" />
+    <result column="update_at" jdbcType="BIGINT" property="updateAt" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, production_url, illustrating_picture, banner_state, create_at, update_at, create_by
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from banner_manage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from banner_manage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jnshu.pojo.BannerManage">
+    insert into banner_manage (id, production_url, illustrating_picture, 
+      banner_state, create_at, update_at, 
+      create_by)
+    values (#{id,jdbcType=BIGINT}, #{productionUrl,jdbcType=VARCHAR}, #{illustratingPicture,jdbcType=VARCHAR}, 
+      #{bannerState,jdbcType=TINYINT}, #{createAt,jdbcType=BIGINT}, #{updateAt,jdbcType=BIGINT}, 
+      #{createBy,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jnshu.pojo.BannerManage">
+    insert into banner_manage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productionUrl != null">
+        production_url,
+      </if>
+      <if test="illustratingPicture != null">
+        illustrating_picture,
+      </if>
+      <if test="bannerState != null">
+        banner_state,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productionUrl != null">
+        #{productionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="illustratingPicture != null">
+        #{illustratingPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerState != null">
+        #{bannerState,jdbcType=TINYINT},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jnshu.pojo.BannerManage">
+    update banner_manage
+    <set>
+      <if test="productionUrl != null">
+        production_url = #{productionUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="illustratingPicture != null">
+        illustrating_picture = #{illustratingPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="bannerState != null">
+        banner_state = #{bannerState,jdbcType=TINYINT},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jnshu.pojo.BannerManage">
+    update banner_manage
+    set production_url = #{productionUrl,jdbcType=VARCHAR},
+      illustrating_picture = #{illustratingPicture,jdbcType=VARCHAR},
+      banner_state = #{bannerState,jdbcType=TINYINT},
+      create_at = #{createAt,jdbcType=BIGINT},
+      update_at = #{updateAt,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

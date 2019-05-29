@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jnshu.dao.StudioManageMapper">
+  <resultMap id="BaseResultMap" type="com.jnshu.pojo.StudioManage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="studio_intro" jdbcType="VARCHAR" property="studioIntro" />
+    <result column="studio_picture" jdbcType="VARCHAR" property="studioPicture" />
+    <result column="studio_info" jdbcType="VARCHAR" property="studioInfo" />
+    <result column="create_at" jdbcType="BIGINT" property="createAt" />
+    <result column="update_at" jdbcType="BIGINT" property="updateAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, studio_intro, studio_picture, studio_info, create_at, update_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from studio_manage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from studio_manage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.jnshu.pojo.StudioManage">
+    insert into studio_manage (id, studio_intro, studio_picture, 
+      studio_info, create_at, update_at
+      )
+    values (#{id,jdbcType=BIGINT}, #{studioIntro,jdbcType=VARCHAR}, #{studioPicture,jdbcType=VARCHAR}, 
+      #{studioInfo,jdbcType=VARCHAR}, #{createAt,jdbcType=BIGINT}, #{updateAt,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jnshu.pojo.StudioManage">
+    insert into studio_manage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="studioIntro != null">
+        studio_intro,
+      </if>
+      <if test="studioPicture != null">
+        studio_picture,
+      </if>
+      <if test="studioInfo != null">
+        studio_info,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="studioIntro != null">
+        #{studioIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="studioPicture != null">
+        #{studioPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="studioInfo != null">
+        #{studioInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jnshu.pojo.StudioManage">
+    update studio_manage
+    <set>
+      <if test="studioIntro != null">
+        studio_intro = #{studioIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="studioPicture != null">
+        studio_picture = #{studioPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="studioInfo != null">
+        studio_info = #{studioInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jnshu.pojo.StudioManage">
+    update studio_manage
+    set studio_intro = #{studioIntro,jdbcType=VARCHAR},
+      studio_picture = #{studioPicture,jdbcType=VARCHAR},
+      studio_info = #{studioInfo,jdbcType=VARCHAR},
+      create_at = #{createAt,jdbcType=BIGINT},
+      update_at = #{updateAt,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
