@@ -2,9 +2,9 @@ package com.jnshu.dao;
 
 import com.jnshu.pojo.LeaveWords;
 import com.jnshu.pojo.Result;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -26,4 +26,6 @@ public interface LeaveWordsMapper {
     int updateByPrimaryKey(LeaveWords record);
 
     Result<LeaveWords> selectByPrimaryKey();
+
+    int updateStatById(@Param("id") Long id, @Param("leavewordsStat") byte leavewordsStat);
 }

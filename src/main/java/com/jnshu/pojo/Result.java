@@ -1,7 +1,5 @@
 package com.jnshu.pojo;
 
-import com.sun.org.apache.regexp.internal.RE;
-
 public class Result<T> {
     private int code;
     private String message;

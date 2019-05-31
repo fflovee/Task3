@@ -2,9 +2,9 @@ package com.jnshu.utils;
 
 public class Page {
 
-    int start=0;
-    int count=2;
-    int last=0;
+    int start = 0;
+    int count = 2;
+    int last = 0;
 
     public int getStart() {
         return start;
@@ -29,8 +29,9 @@ public class Page {
     public void setLast(int last) {
         this.last = last;
     }
+
     public void caculateLast(int total) {
-        if (0==total % count)
+        if (0 == total % count)
             last = total - count;
         else
             last = total - total - count;

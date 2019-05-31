@@ -1,9 +1,9 @@
 package com.jnshu.service;
 
 import com.jnshu.pojo.LeaveWords;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,6 +20,8 @@ public interface LeaveWordsService {
     int deleteLeaveswordsList(List<String> date);
 
     int deleteByPrimaryKey(long id);
+
+    int updateStatById(@Param("id") Long id, @Param("leavewordsStat") byte leavewordsStat);
 
 }
 

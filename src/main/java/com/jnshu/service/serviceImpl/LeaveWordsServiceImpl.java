@@ -21,17 +21,17 @@ public class LeaveWordsServiceImpl implements LeaveWordsService {
 
     @Override
     public List<LeaveWords> selectLeavewordsByNameAndStat(LeaveWords leaveWords) {
-        return this.leaveWordsMapper.selectLeavewordsByNameAndStat(leaveWords);
+        return leaveWordsMapper.selectLeavewordsByNameAndStat(leaveWords);
     }
 
     @Override
     public int insertLaveswords(LeaveWords leaveWords) {
-        return this.leaveWordsMapper.insertSelective(leaveWords);
+        return leaveWordsMapper.insertSelective(leaveWords);
     }
 
     @Override
     public int deleteleaveswords(Long id) {
-        return this.leaveWordsMapper.deleteByPrimaryKey(id);
+        return leaveWordsMapper.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -43,4 +43,10 @@ public class LeaveWordsServiceImpl implements LeaveWordsService {
     public int deleteByPrimaryKey(long id) {
         return leaveWordsMapper.deleteByPrimaryKey(id);
     }
+
+    @Override
+    public int updateStatById(Long id, byte leavewordsStat) {
+        return leaveWordsMapper.updateStatById(id, leavewordsStat);
+    }
+
 }
