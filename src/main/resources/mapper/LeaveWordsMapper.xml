@@ -26,9 +26,9 @@
         from leavewords_manage
         <where>
             <if test="productionName != null and productionName != ''">
-                and production_name like #{productionName}
+                and production_name like "%"#{productionName}"%"
             </if>
-            <if test="leavewordsStat != null and leavewordsStat != ''">
+            <if test="leavewordsStat != null">
                 and leavewords_stat = #{leavewordsStat}
             </if>
         </where>

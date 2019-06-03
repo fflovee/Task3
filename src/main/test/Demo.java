@@ -16,6 +16,7 @@ public class Demo {
 
     @Autowired
     LeaveWordsMapper leaveWordsMapper;
+
     @Test
     public void insert() {
         LeaveWords leaveWords = new LeaveWords();

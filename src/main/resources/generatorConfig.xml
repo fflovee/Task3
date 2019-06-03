@@ -20,7 +20,8 @@
         <!--数据库连接信息-->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/jnshu?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC"
-                        userId="root" password="Daohao250=">
+                        userId="root"
+                        password="Daohao250=">
         </jdbcConnection>
 
         <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，

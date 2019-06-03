@@ -21,7 +21,7 @@ public interface LeaveWordsService {
 
     int deleteByPrimaryKey(long id);
 
-    int updateStatById(@Param("id") Long id, @Param("leavewordsStat") byte leavewordsStat);
+    int updateStatById(Long id,byte leavewordsStat);
 
 }
 

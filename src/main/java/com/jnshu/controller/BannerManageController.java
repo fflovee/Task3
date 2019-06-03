@@ -1,13 +1,16 @@
 package com.jnshu.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.jnshu.pojo.BannerManage;
 import com.jnshu.pojo.Result;
 import com.jnshu.service.BannerManageService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
 @RestController
@@ -15,15 +18,26 @@ public class BannerManageController {
 
     private static Logger log = LogManager.getLogger(BannerManageController.class);
 
-    @Autowired
+    @Resource
     private BannerManageService bannerManageService;
+
+    //查询banner图
+    @RequestMapping(value = "/banner", method = RequestMethod.GET)
+    public Result selectBanner(@RequestParam(value = "state", required = false) Byte state, @RequestParam(value = "create", required = false) String create, @RequestParam(value = "page",required = false,defaultValue = "1") int page ,@RequestParam(value = "rows",required = false,defaultValue = "5")int rows) throws RuntimeException {
+        BannerManage bannerManage = new BannerManage();
+        bannerManage.setBannerState(state);
+        bannerManage.setCreateBy(create);
+        PageHelper.startPage(page,rows);
+        List<BannerManage> bannerManageList = bannerManageService.selectBanner(bannerManage);
+        return new Result(1, "查询banner列表", bannerManageList);
+    }
 
     //  新增banner图
     @RequestMapping(value = "/banner/add", method = RequestMethod.PUT)
-    public Result insertBanner(String bannerurl,String bannerpic) {
+    public Result insertBanner(String bannerurl, String bannerpic) {
         BannerManage bannerManage = new BannerManage();
         bannerManage.setCreateAt(System.currentTimeMillis());
-        int i = bannerManageService.addBanner(bannerurl,bannerpic);
+        int i = bannerManageService.addBanner(bannerurl, bannerpic);
         log.info("插入banner成功");
         if (i > 0) {
             return new Result(1, "插入banner图成功");
@@ -62,19 +76,5 @@ public class BannerManageController {
             }
         }
         return new Result(-1, "只能上架最多6张banner图");
-    }
-
-    //查找banner图
-    @RequestMapping(value = "/banner/list", method = RequestMethod.GET)
-    public Result updateBanner(Byte state, String createby) {
-        if (state != null && state.equals("")) {
-            BannerManage bannerManage = new BannerManage();
-            if (state == 1)
-                bannerManage.setCreateBy("张三");
-            bannerManage.setBannerState((byte) 0);
-            bannerManage.setUpdateAt(System.currentTimeMillis());
-            return new Result(1, "查询到所有上架banner图", bannerManage);
-        }
-        return null;
     }
 }

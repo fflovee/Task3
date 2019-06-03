@@ -54,12 +54,27 @@
         #{createBy,jdbcType=VARCHAR})
     </insert>
 
-    <update id="updateByIds" parameterType="java.util.List">
+    <!--查找banner图-->
+    <select id="selectBannerByCreateByAndState" parameterType="com.jnshu.pojo.BannerManage" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List"/>
+        from banner_manage
+        <where>
+            <if test="createBy != null and createBy != ''">
+                and create_by like "%"#{createBy}"%"
+            </if>
+            <if test="bannerState != null">
+                and banner_state = #{bannerState}
+            </if>
+        </where>
+    </select>
+
+<!--    <update id="updateByIds" parameterType="java.util.List">
         update from banner_manage set weight=#{weight} where id in
         <foreach collection="list" item="id" open="(" close=")" index="index" separator=",">
             #{id}
         </foreach>
-    </update>
+    </update>-->
     
     <insert id="insertSelective" parameterType="com.jnshu.pojo.BannerManage">
         insert into banner_manage

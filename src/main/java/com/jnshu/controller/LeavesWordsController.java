@@ -27,17 +27,12 @@ public class LeavesWordsController {
     @ResponseBody
     @RequestMapping(value = "/leavewords", method = RequestMethod.GET)
     //RequestParam绑定参数，包装类包含空格，required = false（默认true）允许传空值。
-    public Result leaveWordsResult(@RequestParam(value = "stat", required = false) Byte stat, @RequestParam(value = "name", required = false) String name, Page page) {
+    public Result leaveWordsResult(@RequestParam(value = "state", required = false) Byte state, @RequestParam(value = "productionname", required = false) String productionname, Page page) {
         LeaveWords leaveWords = new LeaveWords();
-        leaveWords.setLeavewordsStat(stat);
-        if (name != null && !name.equals("")) {
-            leaveWords.setProductionName("%" + name + "%");//拼接模糊查询
-        }
-//        Long time = System.currentTimeMillis();
-//        leaveWords.setUpdateAt(time);
-        PageHelper.offsetPage(page.getStart(), page.getCount());
+        leaveWords.setLeavewordsStat(state);
+        leaveWords.setProductionName(productionname);
+        PageHelper.startPage(page.getStart(), page.getCount());
         List<LeaveWords> leaveWordsList = leaveWordsService.selectLeavewordsByNameAndStat(leaveWords);
-        page.caculateLast(leaveWordsList.size());
         return new Result(1, "success", leaveWordsList);
     }
 

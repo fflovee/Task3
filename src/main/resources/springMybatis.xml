@@ -58,4 +58,13 @@
         <property name="basePackage" value="com.jnshu.dao"/>
     </bean>
 
+    <!--配置jsp 显示ViewReslover-->
+    <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--全局异常处理配置-->
+    <bean id="MyExceptionHandler" class="com.jnshu.controller.MyExceptionHandler"/>
+
 </beans>
