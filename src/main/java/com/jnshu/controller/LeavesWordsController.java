@@ -68,12 +68,9 @@ public class LeavesWordsController {
             }
         }
         if (error > 0) {
-
             //事务回滚+报错
             return new Result(-1, "DELETE FAIL");
-
         }
-
         return new Result(1, "DELETE SUCCESS");
     }
 
@@ -94,13 +91,10 @@ public class LeavesWordsController {
                     error = error + 1;
                 }
             }
-
             if (error > 0) {
-
                 return new Result(-1, "DELETE FAIL");
             }
         }
-
         return new Result(1, "DELETE SUCCESS");
     }
 

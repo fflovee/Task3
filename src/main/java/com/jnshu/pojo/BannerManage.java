@@ -16,6 +16,17 @@ public class BannerManage {
 
     private String createBy;
 
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    private Integer weight;
+
+
     public Long getId() {
         return id;
     }
@@ -82,6 +93,7 @@ public class BannerManage {
                 ", createAt=" + createAt +
                 ", updateAt=" + updateAt +
                 ", createBy='" + createBy + '\'' +
+                ", weight=" + weight +
                 '}';
     }
 }

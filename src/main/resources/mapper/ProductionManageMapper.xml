@@ -5,7 +5,6 @@
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="production_name" jdbcType="VARCHAR" property="productionName"/>
         <result column="production_intro" jdbcType="VARCHAR" property="productionIntro"/>
-        <result column="firstdirectory" jdbcType="VARCHAR" property="firstdirectory"/>
         <result column="seconddirectory" jdbcType="VARCHAR" property="seconddirectory"/>
         <result column="thumbna_url" jdbcType="VARCHAR" property="thumbnaUrl"/>
         <result column="video_url" jdbcType="VARCHAR" property="videoUrl"/>
@@ -17,7 +16,7 @@
         <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, production_name, production_intro, firstdirectory, seconddirectory, thumbna_url, 
+    id, production_name, production_intro, seconddirectory, thumbna_url,
     video_url, infopicture_url, production_info, production_state, create_at, update_at, 
     create_by
   </sql>
@@ -27,18 +26,38 @@
         from production_manage
         where id = #{id,jdbcType=BIGINT}
     </select>
+    <!--条件查询作品集-->
+    <select id="selectProduction" parameterType="com.jnshu.pojo.ProductionManage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from production_manage
+        <where>
+            <if test="productionState != null">
+                and production_state = #{productionState}
+            </if>
+            <if test="productionName != null and productionName != ''">
+                and production_name like "%"#{productionName}"%"
+            </if>
+        </where>
+    </select>
+
+    <select id="selectAllProduction" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from production_manage
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from production_manage
     where id = #{id,jdbcType=BIGINT}
   </delete>
     <insert id="insert" parameterType="com.jnshu.pojo.ProductionManage">
     insert into production_manage (id, production_name, production_intro, 
-      firstdirectory, seconddirectory, thumbna_url, 
+      seconddirectory, thumbna_url,
       video_url, infopicture_url, production_info, 
       production_state, create_at, update_at, 
       create_by)
     values (#{id,jdbcType=BIGINT}, #{productionName,jdbcType=VARCHAR}, #{productionIntro,jdbcType=VARCHAR}, 
-      #{firstdirectory,jdbcType=VARCHAR}, #{seconddirectory,jdbcType=VARCHAR}, #{thumbnaUrl,jdbcType=VARCHAR}, 
+      #{seconddirectory,jdbcType=VARCHAR}, #{thumbnaUrl,jdbcType=VARCHAR},
       #{videoUrl,jdbcType=VARCHAR}, #{infopictureUrl,jdbcType=VARCHAR}, #{productionInfo,jdbcType=VARCHAR}, 
       #{productionState,jdbcType=TINYINT}, #{createAt,jdbcType=BIGINT}, #{updateAt,jdbcType=BIGINT}, 
       #{createBy,jdbcType=VARCHAR})
@@ -54,9 +73,6 @@
             </if>
             <if test="productionIntro != null">
                 production_intro,
-            </if>
-            <if test="firstdirectory != null">
-                firstdirectory,
             </if>
             <if test="seconddirectory != null">
                 seconddirectory,
@@ -96,9 +112,6 @@
             <if test="productionIntro != null">
                 #{productionIntro,jdbcType=VARCHAR},
             </if>
-            <if test="firstdirectory != null">
-                #{firstdirectory,jdbcType=VARCHAR},
-            </if>
             <if test="seconddirectory != null">
                 #{seconddirectory,jdbcType=VARCHAR},
             </if>
@@ -137,9 +150,6 @@
             <if test="productionIntro != null">
                 production_intro = #{productionIntro,jdbcType=VARCHAR},
             </if>
-            <if test="firstdirectory != null">
-                firstdirectory = #{firstdirectory,jdbcType=VARCHAR},
-            </if>
             <if test="seconddirectory != null">
                 seconddirectory = #{seconddirectory,jdbcType=VARCHAR},
             </if>
@@ -174,7 +184,6 @@
     update production_manage
     set production_name = #{productionName,jdbcType=VARCHAR},
       production_intro = #{productionIntro,jdbcType=VARCHAR},
-      firstdirectory = #{firstdirectory,jdbcType=VARCHAR},
       seconddirectory = #{seconddirectory,jdbcType=VARCHAR},
       thumbna_url = #{thumbnaUrl,jdbcType=VARCHAR},
       video_url = #{videoUrl,jdbcType=VARCHAR},

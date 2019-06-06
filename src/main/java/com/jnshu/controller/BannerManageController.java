@@ -1,18 +1,18 @@
 package com.jnshu.controller;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jnshu.pojo.BannerManage;
 import com.jnshu.pojo.Result;
 import com.jnshu.service.BannerManageService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.List;
 
-@Controller
 @RestController
 public class BannerManageController {
 
@@ -23,13 +23,17 @@ public class BannerManageController {
 
     //查询banner图
     @RequestMapping(value = "/banner", method = RequestMethod.GET)
-    public Result selectBanner(@RequestParam(value = "state", required = false) Byte state, @RequestParam(value = "create", required = false) String create, @RequestParam(value = "page",required = false,defaultValue = "1") int page ,@RequestParam(value = "rows",required = false,defaultValue = "5")int rows) throws RuntimeException {
+    public Result selectBanner(@RequestParam(value = "state", required = false) Byte state,
+                               @RequestParam(value = "create", required = false) String create,
+                               @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                               @RequestParam(value = "rows", required = false, defaultValue = "5") int rows) throws RuntimeException {
         BannerManage bannerManage = new BannerManage();
         bannerManage.setBannerState(state);
         bannerManage.setCreateBy(create);
-        PageHelper.startPage(page,rows);
+        PageHelper.startPage(page, rows);
         List<BannerManage> bannerManageList = bannerManageService.selectBanner(bannerManage);
-        return new Result(1, "查询banner列表", bannerManageList);
+        PageInfo<BannerManage> bannerManagePageInfo = new PageInfo<>(bannerManageList);
+        return new Result(1, "查询banner列表", bannerManagePageInfo);
     }
 
     //  新增banner图
@@ -76,5 +80,19 @@ public class BannerManageController {
             }
         }
         return new Result(-1, "只能上架最多6张banner图");
+    }
+
+    @RequestMapping(value = "/banner/weight", method = RequestMethod.PUT)
+    public Result updateBannerlist(@RequestBody Long[] ids) {
+        int index = 1;
+        for (Long id : ids) {
+            BannerManage bannerManage = new BannerManage();
+            bannerManage.setWeight(index);
+            bannerManage.setId(id);
+            bannerManageService.updateByPrimaryKeySelective(bannerManage);
+            index++;
+        }
+        System.out.println("=================" + Arrays.toString(ids) + "=================");
+        return new Result(0, "排序成功");
     }
 }

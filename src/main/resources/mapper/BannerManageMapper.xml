@@ -9,10 +9,11 @@
         <result column="create_at" jdbcType="BIGINT" property="createAt"/>
         <result column="update_at" jdbcType="BIGINT" property="updateAt"/>
         <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="weight" jdbcType="BIGINT" property="weight"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-    id, production_url, illustrating_picture, banner_state, create_at, update_at, create_by
+    id, production_url, illustrating_picture, banner_state, create_at, update_at, create_by ,weight
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -48,10 +49,10 @@
     <insert id="insert" parameterType="com.jnshu.pojo.BannerManage">
         insert into banner_manage (id, production_url, illustrating_picture,
         banner_state, create_at, update_at,
-        create_by)
+        create_by,weight)
         values (#{id,jdbcType=BIGINT}, #{productionUrl,jdbcType=VARCHAR}, #{illustratingPicture,jdbcType=VARCHAR},
         #{bannerState,jdbcType=TINYINT}, #{createAt,jdbcType=BIGINT}, #{updateAt,jdbcType=BIGINT},
-        #{createBy,jdbcType=VARCHAR})
+        #{createBy,jdbcType=VARCHAR},#{weight,jdbcType=BIGINT})
     </insert>
 
     <!--查找banner图-->
@@ -100,6 +101,9 @@
             <if test="createBy != null">
                 create_by,
             </if>
+            <if test="weight != null">
+                weight,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -123,8 +127,12 @@
             <if test="createBy != null">
                 #{createBy,jdbcType=VARCHAR},
             </if>
+            <if test="weight != null">
+                weight,
+            </if>
         </trim>
     </insert>
+
     <update id="updateByPrimaryKeySelective" parameterType="com.jnshu.pojo.BannerManage">
         update banner_manage
         <set>
@@ -146,9 +154,13 @@
             <if test="createBy != null">
                 create_by = #{createBy,jdbcType=VARCHAR},
             </if>
+            <if test="weight != null">
+                weight = #{weight,jdbcType=BIGINT},
+            </if>
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
+
     <update id="updateByPrimaryKey" parameterType="com.jnshu.pojo.BannerManage">
         update banner_manage
         set production_url = #{productionUrl,jdbcType=VARCHAR},
@@ -156,7 +168,8 @@
         banner_state = #{bannerState,jdbcType=TINYINT},
         create_at = #{createAt,jdbcType=BIGINT},
         update_at = #{updateAt,jdbcType=BIGINT},
-        create_by = #{createBy,jdbcType=VARCHAR}
+        create_by = #{createBy,jdbcType=VARCHAR},
+        weight = #{weight,jdbcType=BIGINT}
         where id = #{id,jdbcType=BIGINT}
     </update>
 </mapper>

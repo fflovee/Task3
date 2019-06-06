@@ -1,7 +1,7 @@
 package com.jnshu.service;
 
+import com.jnshu.pojo.BannerManage;
 import com.jnshu.pojo.LeaveWords;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +22,8 @@ public interface LeaveWordsService {
     int deleteByPrimaryKey(long id);
 
     int updateStatById(Long id,byte leavewordsStat);
+
+
 
 }
 

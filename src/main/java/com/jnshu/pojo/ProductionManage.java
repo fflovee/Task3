@@ -7,8 +7,6 @@ public class ProductionManage {
 
     private String productionIntro;
 
-    private String firstdirectory;
-
     private String seconddirectory;
 
     private String thumbnaUrl;
@@ -33,7 +31,6 @@ public class ProductionManage {
                 "id=" + id +
                 ", productionName='" + productionName + '\'' +
                 ", productionIntro='" + productionIntro + '\'' +
-                ", firstdirectory='" + firstdirectory + '\'' +
                 ", seconddirectory='" + seconddirectory + '\'' +
                 ", thumbnaUrl='" + thumbnaUrl + '\'' +
                 ", videoUrl='" + videoUrl + '\'' +
@@ -68,14 +65,6 @@ public class ProductionManage {
 
     public void setProductionIntro(String productionIntro) {
         this.productionIntro = productionIntro;
-    }
-
-    public String getFirstdirectory() {
-        return firstdirectory;
-    }
-
-    public void setFirstdirectory(String firstdirectory) {
-        this.firstdirectory = firstdirectory;
     }
 
     public String getSeconddirectory() {
