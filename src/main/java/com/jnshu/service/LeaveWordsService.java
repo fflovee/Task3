@@ -1,6 +1,5 @@
 package com.jnshu.service;
 
-import com.jnshu.pojo.BannerManage;
 import com.jnshu.pojo.LeaveWords;
 import org.springframework.stereotype.Service;
 
