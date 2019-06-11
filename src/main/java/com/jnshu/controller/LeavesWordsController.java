@@ -2,10 +2,10 @@ package com.jnshu.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jnshu.pojo.LeaveWords;
 import com.jnshu.pojo.Result;
 import com.jnshu.service.LeaveWordsService;
-import com.jnshu.utils.Page;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +27,17 @@ public class LeavesWordsController {
     @ResponseBody
     @RequestMapping(value = "/leavewords", method = RequestMethod.GET)
     //RequestParam绑定参数，包装类包含空格，required = false（默认true）允许传空值。
-    public Result leaveWordsResult(@RequestParam(value = "state", required = false) Byte state, @RequestParam(value = "productionname", required = false) String productionname, Page page) {
+    public Result leaveWordsResult(@RequestParam(value = "state", required = false) Byte state,
+                                   @RequestParam(value = "productionname", required = false) String productionname,
+                                   @RequestParam(value = "page", required = false, defaultValue = "1") int page,
+                                   @RequestParam(value = "count", required = false, defaultValue = "5") int count) throws RuntimeException {
         LeaveWords leaveWords = new LeaveWords();
         leaveWords.setLeavewordsStat(state);
         leaveWords.setProductionName(productionname);
-        PageHelper.startPage(page.getStart(), page.getCount());
+        PageHelper.startPage(page,count);
         List<LeaveWords> leaveWordsList = leaveWordsService.selectLeavewordsByNameAndStat(leaveWords);
-        return new Result(1, "success", leaveWordsList);
+        PageInfo<LeaveWords> leaveWordsPageInfo = new PageInfo<>(leaveWordsList);
+        return new Result(1, "success", leaveWordsPageInfo);
     }
 
     //插入留言
@@ -55,9 +59,9 @@ public class LeavesWordsController {
     public Result leavewordsDeleteById(@RequestParam("ids") ArrayList ids) {
         int row = 0;//成功删除条数
         int error = 0;//删除错误条数
-        for (int i = 0; i < ids.size(); i++) {//遍历数组
-            if ((int) ids.get(i) > 0) {
-                int a = leaveWordsService.deleteleaveswords((Long) ids.get(i));
+        for (Object id : ids) {//遍历数组
+            if ((int) id > 0) {
+                int a = leaveWordsService.deleteleaveswords((Long) id);
                 if (a == 1) {
                     row = row + 1;
                 } else {
