@@ -36,7 +36,7 @@ public class BannerManageController {
         return new Result(1, "查询banner列表", bannerManagePageInfo);
     }
 
-    //  新增banner图
+    //新增banner图
     @RequestMapping(value = "/banner/add", method = RequestMethod.PUT)
     public Result insertBanner(String bannerurl, String bannerpic) {
         BannerManage bannerManage = new BannerManage();
@@ -49,7 +49,7 @@ public class BannerManageController {
         return new Result(-1, "插入banner图失败");
     }
 
-    //  删除banner图
+    //删除banner图
     @RequestMapping(value = "banner/delete", method = RequestMethod.DELETE)
     public Result deleteBanner(Long id) {
         int i = bannerManageService.deleteBanner(id);
@@ -60,8 +60,8 @@ public class BannerManageController {
         return new Result(-1, "banner图删除失败");
     }
 
-    //  更新banner图
-    @RequestMapping(value = "/banner/updatestate", method = RequestMethod.POST)
+    //更新banner图
+    @RequestMapping(value = "/banner/state", method = RequestMethod.POST)
     public Result updateBannerState(Byte state, Long id) {
         if (state == 0) {
             int a = bannerManageService.updateBannerState(state, id);
@@ -82,6 +82,7 @@ public class BannerManageController {
         return new Result(-1, "只能上架最多6张banner图");
     }
 
+    //banner图排序
     @RequestMapping(value = "/banner/weight", method = RequestMethod.PUT)
     public Result updateBannerlist(@RequestBody Long[] ids) {
         int index = 1;

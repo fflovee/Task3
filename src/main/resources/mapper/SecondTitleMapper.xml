@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jnshu.dao.SecondTitleMapper">
+  <resultMap id="BaseResultMap" type="com.jnshu.pojo.SecondTitle">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="fid" jdbcType="BIGINT" property="fid" />
+    <result column="title_name" jdbcType="VARCHAR" property="titleName" />
+    <result column="collection_name" jdbcType="VARCHAR" property="collectionName" />
+    <result column="title_state" jdbcType="TINYINT" property="titleState" />
+    <result column="create_at" jdbcType="BIGINT" property="createAt" />
+    <result column="update_at" jdbcType="BIGINT" property="updateAt" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+
+  <sql id="Base_Column_List">
+    id, fid, title_name, collection_name, title_state, create_at, update_at, create_by, 
+    update_by
+  </sql>
+
+  <!--查询作品集下面有几条是否有上架的二级标题-->
+  <select id="selectCollectionAndSecondTitle" resultType="int">
+    select count(*)
+    from second_title where
+    fid = #{fid} and title_state = #{titleState}
+  </select>
+
+  <!--查询作品集下面有几条二级标题-->
+  <select id="selectCountByFid" resultType="int">
+    select count(*)
+    from second_title where
+    fid = #{fid}
+  </select>
+
+  <!--插入作品集分类-->
+  <insert id="insertSelective" parameterType="com.jnshu.pojo.SecondTitle">
+    insert into second_title
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fid != null">
+        fid,
+      </if>
+      <if test="titleName != null">
+        title_name,
+      </if>
+      <if test="collectionName != null">
+        collection_name,
+      </if>
+      <if test="titleState != null">
+        title_state,
+      </if>
+      <if test="createAt != null">
+        create_at,
+      </if>
+      <if test="updateAt != null">
+        update_at,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="fid != null">
+        #{fid,jdbcType=BIGINT},
+      </if>
+      <if test="titleName != null">
+        #{titleName,jdbcType=VARCHAR},
+      </if>
+      <if test="collectionName != null">
+        #{collectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="titleState != null">
+        #{titleState,jdbcType=TINYINT},
+      </if>
+      <if test="createAt != null">
+        #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+
+
+
+
+
+  <select id="selectByExample" parameterType="com.jnshu.pojo.SecondTitleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from second_title
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from second_title
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from second_title
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <delete id="deleteByExample" parameterType="com.jnshu.pojo.SecondTitleExample">
+    delete from second_title
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+
+  <insert id="insert" parameterType="com.jnshu.pojo.SecondTitle">
+    insert into second_title (id, fid, title_name, 
+      collection_name, title_state, create_at, 
+      update_at, create_by, update_by
+      )
+    values (#{id,jdbcType=BIGINT}, #{fid,jdbcType=BIGINT}, #{titleName,jdbcType=VARCHAR}, 
+      #{collectionName,jdbcType=VARCHAR}, #{titleState,jdbcType=TINYINT}, #{createAt,jdbcType=BIGINT}, 
+      #{updateAt,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{updateBy,jdbcType=VARCHAR}
+      )
+  </insert>
+
+
+  <select id="countByExample" parameterType="com.jnshu.pojo.SecondTitleExample" resultType="java.lang.Long">
+    select count(*) from second_title
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <update id="updateByExampleSelective" parameterType="map">
+    update second_title
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.fid != null">
+        fid = #{record.fid,jdbcType=BIGINT},
+      </if>
+      <if test="record.titleName != null">
+        title_name = #{record.titleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.collectionName != null">
+        collection_name = #{record.collectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titleState != null">
+        title_state = #{record.titleState,jdbcType=TINYINT},
+      </if>
+      <if test="record.createAt != null">
+        create_at = #{record.createAt,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateAt != null">
+        update_at = #{record.updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="record.createBy != null">
+        create_by = #{record.createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateBy != null">
+        update_by = #{record.updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByExample" parameterType="map">
+    update second_title
+    set id = #{record.id,jdbcType=BIGINT},
+      fid = #{record.fid,jdbcType=BIGINT},
+      title_name = #{record.titleName,jdbcType=VARCHAR},
+      collection_name = #{record.collectionName,jdbcType=VARCHAR},
+      title_state = #{record.titleState,jdbcType=TINYINT},
+      create_at = #{record.createAt,jdbcType=BIGINT},
+      update_at = #{record.updateAt,jdbcType=BIGINT},
+      create_by = #{record.createBy,jdbcType=VARCHAR},
+      update_by = #{record.updateBy,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.jnshu.pojo.SecondTitle">
+    update second_title
+    <set>
+      <if test="fid != null">
+        fid = #{fid,jdbcType=BIGINT},
+      </if>
+      <if test="titleName != null">
+        title_name = #{titleName,jdbcType=VARCHAR},
+      </if>
+      <if test="collectionName != null">
+        collection_name = #{collectionName,jdbcType=VARCHAR},
+      </if>
+      <if test="titleState != null">
+        title_state = #{titleState,jdbcType=TINYINT},
+      </if>
+      <if test="createAt != null">
+        create_at = #{createAt,jdbcType=BIGINT},
+      </if>
+      <if test="updateAt != null">
+        update_at = #{updateAt,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.jnshu.pojo.SecondTitle">
+    update second_title
+    set fid = #{fid,jdbcType=BIGINT},
+      title_name = #{titleName,jdbcType=VARCHAR},
+      collection_name = #{collectionName,jdbcType=VARCHAR},
+      title_state = #{titleState,jdbcType=TINYINT},
+      create_at = #{createAt,jdbcType=BIGINT},
+      update_at = #{updateAt,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+</mapper>

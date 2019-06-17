@@ -1,9 +1,7 @@
 import com.jnshu.dao.BannerManageMapper;
 import com.jnshu.dao.LeaveWordsMapper;
-import com.jnshu.dao.ProductionManageMapper;
 import com.jnshu.pojo.BannerManage;
 import com.jnshu.pojo.LeaveWords;
-import com.jnshu.pojo.ProductionManage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
@@ -23,8 +21,6 @@ public class Demo {
     LeaveWordsMapper leaveWordsMapper;
     @Autowired
     BannerManageMapper bannerManageMapper;
-    @Autowired
-    ProductionManageMapper productionManageMapper;
 
     @Test
     public void insert() {
@@ -70,25 +66,4 @@ public class Demo {
         }
     }*/
 
-    @Test
-    public void insertProduction() {
-        for (int i = 0;i<10;i++){
-            ProductionManage productionManage = new ProductionManage();
-            productionManage.setProductionName("架上绘画.装置");
-            productionManage.setProductionIntro("大风鸟谁佛的时间啊开了房建档立卡");
-            productionManage.setSeconddirectory("今飞凯达拉时间浪费");
-            productionManage.setThumbnaUrl("djfklasjdklf;as");
-            productionManage.setVideoUrl("djfioweirqew");
-            productionManage.setInfopictureUrl("表姐哦亲加分的破碎、");
-            productionManage.setProductionInfo("jiofjdasl;kj");
-            productionManage.setProductionState((byte)1);
-            productionManage.setCreateAt(System.currentTimeMillis());
-            productionManage.setUpdateAt(System.currentTimeMillis());
-            productionManage.setCreateBy("张大雄");
-            productionManageMapper.insert(productionManage);
-
-
-
-        }
-    }
 }

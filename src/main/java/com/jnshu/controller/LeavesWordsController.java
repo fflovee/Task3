@@ -86,9 +86,9 @@ public class LeavesWordsController {
         int error = 0;
         List list = jsonObject.getJSONArray("ids").toJavaList(long.class);
         log.info("==========================" + list + "==========================");
-        for (int i = 0; i < list.size(); i++) {
-            if ((Long) list.get(i) > 0) {
-                int a = leaveWordsService.deleteByPrimaryKey((long) list.get(i));
+        for (Object o : list) {
+            if ((Long) o > 0) {
+                int a = leaveWordsService.deleteByPrimaryKey((long) o);
                 if (a == 1) {
                     row = row + 1;
                 } else {

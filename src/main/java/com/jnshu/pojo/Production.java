@@ -1,13 +1,13 @@
 package com.jnshu.pojo;
 
-public class ProductionManage {
+public class Production {
     private Long id;
+
+    private Long fid;
 
     private String productionName;
 
     private String productionIntro;
-
-    private String seconddirectory;
 
     private String thumbnaUrl;
 
@@ -25,13 +25,15 @@ public class ProductionManage {
 
     private String createBy;
 
+    private String updateBy;
+
     @Override
     public String toString() {
-        return "ProductionManage{" +
+        return "Production{" +
                 "id=" + id +
+                ", fid=" + fid +
                 ", productionName='" + productionName + '\'' +
                 ", productionIntro='" + productionIntro + '\'' +
-                ", seconddirectory='" + seconddirectory + '\'' +
                 ", thumbnaUrl='" + thumbnaUrl + '\'' +
                 ", videoUrl='" + videoUrl + '\'' +
                 ", infopictureUrl='" + infopictureUrl + '\'' +
@@ -40,6 +42,7 @@ public class ProductionManage {
                 ", createAt=" + createAt +
                 ", updateAt=" + updateAt +
                 ", createBy='" + createBy + '\'' +
+                ", updateBy='" + updateBy + '\'' +
                 '}';
     }
 
@@ -49,6 +52,14 @@ public class ProductionManage {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getFid() {
+        return fid;
+    }
+
+    public void setFid(Long fid) {
+        this.fid = fid;
     }
 
     public String getProductionName() {
@@ -65,14 +76,6 @@ public class ProductionManage {
 
     public void setProductionIntro(String productionIntro) {
         this.productionIntro = productionIntro;
-    }
-
-    public String getSeconddirectory() {
-        return seconddirectory;
-    }
-
-    public void setSeconddirectory(String seconddirectory) {
-        this.seconddirectory = seconddirectory;
     }
 
     public String getThumbnaUrl() {
@@ -137,5 +140,13 @@ public class ProductionManage {
 
     public void setCreateBy(String createBy) {
         this.createBy = createBy;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
     }
 }
