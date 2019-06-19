@@ -8,6 +8,7 @@
     <!--组件扫描（component scanning）-->
     <context:component-scan base-package="com.jnshu.dao"/>
     <context:component-scan base-package="com.jnshu.service"/>
+    <context:component-scan base-package="com.jnshu.controller"/>
     <!--对数据库连接信息进行加密，提取properties文件中信息-->
     <bean id="propertyConfigure" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
         <property name="locations" value="classpath:db.properties"/>
@@ -53,7 +54,7 @@
             </array>
         </property>
     </bean>
-    <!--springmybati 扫描dao下的mapper-->
+    <!--springMybatis 扫描dao下的mapper-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.jnshu.dao"/>
     </bean>
@@ -65,6 +66,6 @@
     </bean>
 
     <!--全局异常处理配置-->
-    <bean id="MyExceptionHandler" class="com.jnshu.controller.MyExceptionHandler"/>
+    <bean id="myExceptionHandler" class="com.jnshu.controller.MyExceptionHandler"/>
 
 </beans>
