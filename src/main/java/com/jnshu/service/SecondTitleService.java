@@ -2,9 +2,7 @@ package com.jnshu.service;
 
 import com.jnshu.pojo.SecondTitle;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Service;
 
-@Service
 public interface SecondTitleService {
 
     // 查找作品集状态

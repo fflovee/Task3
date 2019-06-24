@@ -1,5 +1,6 @@
 package com.jnshu.service.serviceImpl;
 
+import com.jnshu.controller.BusinessException;
 import com.jnshu.dao.BannerManageMapper;
 import com.jnshu.pojo.BannerManage;
 import com.jnshu.service.BannerManageService;
@@ -15,8 +16,14 @@ public class BannerManageServiceImpl implements BannerManageService {
     private BannerManageMapper bannerManageMapper;
 
     @Override
-    public int addBanner(String bannerurl,String bannerpic) {
-        return bannerManageMapper.insert(bannerurl,bannerpic);
+    public int addBanner(BannerManage record) {
+        if (record.getProductionUrl() == null || record.getProductionUrl().equals("")) {
+            throw new BusinessException("作品rul不能为空");
+        }
+        if (record.getIllustratingPicture() == null || record.getIllustratingPicture().equals("")) {
+            throw new BusinessException("banner不能为空");
+        }
+        return bannerManageMapper.insertSelective(record);
     }
 
     @Override
@@ -30,7 +37,7 @@ public class BannerManageServiceImpl implements BannerManageService {
     }
 
     @Override
-    public int deleteBanner(Long id) {
+    public boolean deleteBanner(Long id) {
         return bannerManageMapper.deleteByPrimaryKey(id);
     }
 

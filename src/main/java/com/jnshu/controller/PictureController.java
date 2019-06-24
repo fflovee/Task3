@@ -3,22 +3,20 @@ package com.jnshu.controller;
 import com.jnshu.pojo.Result;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 
-@Controller
+@RestController
 public class PictureController {
     private static Logger log = LogManager.getLogger(PictureController.class);
 
     @RequestMapping(value = "/pictureUp", method = RequestMethod.POST)
-    @ResponseBody
     public Result pictureUp(MultipartFile file) throws IOException {
         String realpath = "F:\\PictureTest\\";//地址
         log.info("判断上传文件是否为空");
@@ -31,14 +29,13 @@ public class PictureController {
             String url = "/PictureTest/" + trunFileName;
             log.info("图片放到数据库中的相对路径：" + url);
 
-            return new Result(1, "success");
+            return new Result(1, "success", path);
         } else {
             log.info("图片上传失败");
             return new Result(-1, "上传失败");
         }
     }
 
-    @ResponseBody
     @RequestMapping(value = "/photoUpload", method = RequestMethod.POST)
     public Result photoUpload(MultipartFile file, HttpServletRequest request) throws IllegalStateException, IOException {
         Result result = new Result();
@@ -60,7 +57,7 @@ public class PictureController {
                     System.out.println("存放图片文件的路径:" + path);
                     // 转存文件到指定的路径
                     file.transferTo(new File(path));
-                    result.setMessage("文件成功上传到指定目录下");
+                    result.setMessage("文件成功上传到指定目录下" + path);
                 } else {
                     result.setMessage("不是我们想要的文件类型,请按要求重新上传");
                     return result;

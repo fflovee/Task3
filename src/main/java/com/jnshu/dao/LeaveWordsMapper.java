@@ -28,4 +28,5 @@ public interface LeaveWordsMapper {
     Result<LeaveWords> selectByPrimaryKey();
 
     int updateStatById(@Param("id") Long id, @Param("leavewordsStat") byte leavewordsStat);
+
 }

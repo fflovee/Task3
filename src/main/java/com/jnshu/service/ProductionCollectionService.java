@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface ProductionCollectionService {
 
     //查询作品集及作品集状态

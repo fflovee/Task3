@@ -14,13 +14,14 @@ public interface BannerManageMapper {
 
     int selectStateCount(@Param("bannerState") Byte state);
 
-    int deleteByPrimaryKey(Long id);
+    boolean deleteByPrimaryKey(Long id);
+
+    // 添加banner图
+    int insertSelective(BannerManage record);
 
     int insert(@Param("production_url") String bannerurl, @Param("illustrating_picture") String bannerpic);
 
     List<BannerManage> selectBannerByCreateByAndState(BannerManage bannerManage);
-
-    int insertSelective(BannerManage record);
 
     BannerManage selectByPrimaryKey(Long id);
 

@@ -2,13 +2,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--组件扫描（component scanning）-->
     <context:component-scan base-package="com.jnshu.dao"/>
     <context:component-scan base-package="com.jnshu.service"/>
-    <context:component-scan base-package="com.jnshu.controller"/>
+
     <!--对数据库连接信息进行加密，提取properties文件中信息-->
     <bean id="propertyConfigure" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
         <property name="locations" value="classpath:db.properties"/>
@@ -37,21 +42,24 @@
         <!--关闭abandoned连接时输出错误日志-->
         <property name="logAbandoned" value="true"/>
     </bean>
+
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <bean id="timeInterceptor" class="com.jnshu.util.TimeInterceptor"/>
+
     <!--mybatis配置文件-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
         <!--分页插件-->
         <property name="plugins">
-            <array>
-                <bean class="com.github.pagehelper.PageInterceptor">
-                    <property name="properties">
-                        <value>
-                            helperDialect=mysql
-                        </value>
-                    </property>
-                </bean>
-            </array>
+            <bean class="com.github.pagehelper.PageInterceptor">
+                <property name="properties">
+                    <value>
+                        <!--对应数据库-->
+                        helperDialect=mysql
+                    </value>
+                </property>
+            </bean>
         </property>
     </bean>
     <!--springMybatis 扫描dao下的mapper-->

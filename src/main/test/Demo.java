@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:springMybatis.xml")
 //添加注释才能在测试类中使用
@@ -53,6 +56,39 @@ public class Demo {
             bannerManageMapper.insertSelective(bannerManage);
         }
     }
+
+    @Test
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 20;
+        int c = 25;
+        int d = 25;
+//        System.out.println("a + b = " + (a + b) );
+//        System.out.println("a - b = " + (a - b) );
+//        System.out.println("a * b = " + (a * b) );
+//        System.out.println("b / a = " + (b / a) );
+//        System.out.println("b % a = " + (b % a) );
+//        System.out.println("c % a = " + (c % a) );
+//        System.out.println("a++   = " +  (a++) );
+//        System.out.println("a--   = " +  (a--) );
+//        // 查看  d++ 与 ++d 的不同
+//        System.out.println("d++   = " +  (d++) );
+        System.out.println("++d   = " +  (++d) );
+    }
+
+    @Test
+    public void niaho() {
+        List<Integer> list = new ArrayList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        list.add(6);
+        System.out.println(list.subList(0,4));
+
+    }
+
 
 /*    @Test
     public void updateBannerlist(Long[] ids) {

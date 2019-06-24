@@ -156,10 +156,6 @@
   </insert>
 
 
-
-
-
-
   <select id="selectByExample" parameterType="com.jnshu.pojo.SecondTitleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
